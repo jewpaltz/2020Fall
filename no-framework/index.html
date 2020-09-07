@@ -7,19 +7,26 @@
     <title>Test Page</title>
 </head>
 <body>
-    <h1>This is my test page</h1>
+    <div id="app">
+        <h1 :style="{ fontSize: size + 'px' }" @click="grow()" >{{ message }}</h1>
+    </div>
+ 
 
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="main.js"></script>
     <script>
-        $( function(){
-            var size = 36;
-            $("h1").click(function(){
-                size += 5;
-                $("h1").css({ fontSize: size });
-            });
-        } );
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'This is My  Test Page',
+                size: 72
+            },
+            methods: {
+                grow(){
+                    this.size += 5;
+                }
+            }
+        })
     </script>
 
 
