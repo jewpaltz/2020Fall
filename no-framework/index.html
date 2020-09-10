@@ -3,14 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />    <link href="./main.css" rel="stylesheet" />
     <title>Test Page</title>
 </head>
 <body>
-    <div id="app">
-        <h1 :style="{ fontSize: size + 'px' }" @click="grow()" >{{ message }}</h1>
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+          </a>
+      
+          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item">
+              Home
+            </a>
+      
+            <a class="navbar-item">
+              Documentation
+            </a>
+      
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                More
+              </a>
+      
+              <div class="navbar-dropdown">
+                <a class="navbar-item">
+                  About
+                </a>
+                <a class="navbar-item">
+                  Jobs
+                </a>
+                <a class="navbar-item">
+                  Contact
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item">
+                  Report an issue
+                </a>
+              </div>
+            </div>
+          </div>
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-primary">
+                  <strong>Sign up</strong>
+                </a>
+                <a class="button is-light">
+                  Log in
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+    <div class="container">
+        <div id="app">
+            <div class="columns">
+                <div class="column">
+            <div class="columns">
+
+
+                <div class="column" v-for="item in inventory">
+                    <div class="card">
+                        <header class="card-header">
+                          <p class="card-header-title">
+                            {{item.name}}
+                          </p>
+                        </header>
+                        <div class="card-content">
+                          <div class="content">
+                            {{item.description}}
+                            <span class="tag is-primary">${{item.price}}</span>
+                          </div>
+                        </div>
+                        <footer class="card-footer">
+                          <a href="#" class="card-footer-item" @click="addToCart(item.name, item.price)" >Add to cart</a>
+                        </footer>
+                      </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="column is-one-quarter">
+            <article class="panel is-primary">
+                <p class="panel-heading">
+                  Your Cart
+                </p>
+                
+                <a class="panel-block is-active" v-for="x in cart">
+                  <span class="panel-icon">
+                    <i class="fas fa-book" aria-hidden="true"></i>
+                  </span>
+                  <span style="flex: 1;">{{x.name}}</span>
+                  
+                  <span>
+                      ${{x.price}}
+                  </span>
+                </a>
+
+                <a class="panel-block ">
+                    <span class="panel-icon">
+                      <i class="fas fa-book" aria-hidden="true"></i>
+                    </span>
+                    <span style="flex: 1; font-weight: bold;">Total</span>
+                    
+                    <span>
+                        {{total()}}
+                    </span>
+                  </a>
+  
+              </article>
+        </div>
+        </div>            
+        </div>
+
     </div>
  
+
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="main.js"></script>
@@ -19,11 +145,24 @@
             el: '#app',
             data: {
                 message: 'This is My  Test Page',
-                size: 72
+                size: 72,
+                inventory: [
+                    { name: "SSD", description: "Play games and program when you want to", price: 60 },
+                    { name: "Keyboard", description: "Don't run out of room", price: 200 },
+                    { name: "Cooling system", description: "Don't burn out your components", price: 250 },
+                    { name: "Screen", description: "Big enough to see everything", price: 90 },
+                ],
+                cart: []
             },
             methods: {
                 grow(){
                     this.size += 5;
+                },
+                addToCart(name, price){
+                    this.cart.push({ name, price });
+                },
+                total(){
+                    return this.cart.reduce( (total, x)=> total += x.price, 0);
                 }
             }
         })
