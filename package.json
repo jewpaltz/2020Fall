@@ -1,10 +1,17 @@
 {
   "name": "2020fall",
   "scripts": {
+    "start": "nodemon --watch server server/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jewpaltz/2020Fall.git"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
