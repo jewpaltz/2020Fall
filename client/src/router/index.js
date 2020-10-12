@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import session from '../models/session'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 
@@ -11,7 +12,8 @@ const routes = [
   {
     path: '/feed',
     name: 'Feed',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Feed.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Feed.vue'),
+    beforeEnter: checkSessionUser
   },
   {
     path: '/about',
@@ -30,3 +32,11 @@ const router = new VueRouter({
 })
 
 export default router
+
+function checkSessionUser (to, from, next) {
+  if(session.user){
+    next();
+  }else{
+    next('Login');
+  }
+}

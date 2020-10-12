@@ -44,14 +44,7 @@
 
     <div class="navbar-end">
       <div class="navbar-item">
-        <div class="buttons">
-          <a class="button">
-            <strong>Sign up</strong>
-          </a>
-            <router-link to="/login"  class="button is-light" >
-                Log in
-            </router-link>
-        </div>
+        <LoginBadge />
       </div>
     </div>
   </div>
@@ -61,12 +54,17 @@
 </template>
 
 <script>
+import LoginBadge from "@/components/LoginBadge";
+
 export default {
   data: ()=> ({
       isActive: false
   }),
   methods: {
 
+  },
+  components: {
+    LoginBadge
   }
 
 }
