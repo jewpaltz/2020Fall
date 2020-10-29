@@ -7,8 +7,13 @@ const users = require('../models/users');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router
+    .get('/', (req, res, next) => {
         users.getAll().then(x=> res.send( x ) )
+        .catch(next);
+    })
+    .get('/types', (req, res, next) => {
+        users.getTypes().then(x=> res.send( x ) )
         .catch(next);
     })
     .get('/search', (req, res, next) => {
