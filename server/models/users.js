@@ -3,7 +3,7 @@
 */
 const mysql = require('./mysql');
 
-const data = [{ name: 'Moshe', age: 43}, { name: 'Biden', age: 78 }]
+//const data = [{ name: 'Moshe', age: 43}, { name: 'Biden', age: 78 }]
 
 async function getAll(){
     //throw { status: 501, message: "This is a fake error" }
@@ -20,5 +20,6 @@ async function add(name, age){
     data.push({name, age});
 }
 
+const search = async q => await mysql.query(`SELECT id, FirstName, LastName FROM Users WHERE LastName LIKE '%${q}%' OR FirstName LIKE '%${q}%'; `);
 
-module.exports = { getAll, add, getTypes, search: async q => data.filter(x=> x.name == q) }
+module.exports = { getAll, add, getTypes, search }
