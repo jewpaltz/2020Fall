@@ -49,7 +49,15 @@ router
             res.send( { ...newUser, Password: undefined } );
         }).catch(next)
     })
-    .put('/:id', (req, res, next) => {
+    .post('/login', (req, res, next) => {
+        users.login(
+            req.body.email,
+            req.body.password
+        ).then(newUser => {
+            res.send( { ...newUser, Password: undefined } );
+        }).catch(next)
+    })
+   .put('/:id', (req, res, next) => {
         users.update( req.params.id,
             req.body.FirstName,
             req.body.LastName, 
