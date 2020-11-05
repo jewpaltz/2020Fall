@@ -32,7 +32,7 @@ router
             req.body.LastName, 
             req.body.DOB, 
             req.body.Password, 
-            6 /* User */, 
+            users.Types.USER, 
         ).then(newUser => {
             res.send( newUser );
         }).catch(next)
@@ -43,7 +43,7 @@ router
             req.body.LastName, 
             req.body.DOB, 
             req.body.Password, 
-            6 /* User */, 
+            users.Types.USER, 
         ).then(newUser => {
             res.send( newUser );
         }).catch(next)
