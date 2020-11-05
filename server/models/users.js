@@ -15,7 +15,11 @@ async function getAll(){
 }
 
 async function get(id){
-    const rows = await mysql.query(`SELECT * FROM ${PREFIX}Users WHERE id=?`, [id]);
+    const sql = `SELECT 
+        *,
+        (SELECT Value FROM ${PREFIX}ContactMethods Where User_id = ${PREFIX}Users.id AND Type='${cm.Types.EMAIL}' AND IsPrimary = true) as PrimaryEmail
+    FROM ${PREFIX}Users WHERE id=?`;
+    const rows = await mysql.query(sql, [id]);
     if(!rows.length) throw { status: 404, message: "Sorry, there is no such user" };
     return rows[0];
 }
@@ -48,8 +52,6 @@ async function register(FirstName, LastName, DOB, Password, User_Type, email) {
     const res = await add(FirstName, LastName, DOB, Password, User_Type);
     const emailRes = await cm.add(cm.Types.EMAIL, email, true, true, res.insertId);
     const user = await get(res.insertId);
-    user.primaryEmail = email;
-    console.log( { user })
     return user;
 }
 
