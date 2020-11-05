@@ -15,7 +15,13 @@ async function getAll(){
 async function get(id){
     const rows = await mysql.query(`SELECT * FROM ${PREFIX}ContactMethods WHERE id=?`, [id]);
     if(!rows.length) throw { status: 404, message: "Sorry, there is no such user" };
-    return rows;
+    return rows[0];
+}
+
+async function exists(email){
+    const rows = await mysql.query(`SELECT * FROM ${PREFIX}ContactMethods WHERE Value=?`, [email]);
+    console.log ( { rows })
+    return rows.length;
 }
 
 async function getTypes(){
@@ -41,4 +47,4 @@ async function remove(id){
 
 const search = async q => await mysql.query(`SELECT id, Value FROM ${PREFIX}ContactMethods WHERE Value LIKE ?; `, [`%${q}%`]);
 
-module.exports = { getAll, get, add, update, remove, getTypes, search, Types }
+module.exports = { getAll, get, exists, add, update, remove, getTypes, search, Types }
