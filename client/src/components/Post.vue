@@ -14,7 +14,7 @@
       </div>
       <div class="media-content">
         <p class="title is-4">{{post.FirstName}} {{post.LastName}}</p>
-        <p class="subtitle is-6">@{{post.primaryEmail}}</p>
+        <p class="subtitle is-6">({{post.PrimaryEmail}})</p>
       </div>
     </div>
 
