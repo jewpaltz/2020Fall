@@ -2,26 +2,26 @@
 <div class="card">
   <div class="card-image">
     <figure class="image">
-      <img :src="post.url">
+      <img :src="post.URL">
     </figure>
   </div>
   <div class="card-content">
     <div class="media">
       <div class="media-left">
         <figure class="image is-48x48 ">
-          <img :src="post.owner.profile" alt="Placeholder image">
+          <img :src="`http://localhost:3001/public/profiles/${post.Owner_id}.jpg`" alt="Placeholder image">
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-4">{{post.owner.name}}</p>
-        <p class="subtitle is-6">@{{post.owner.handle}}</p>
+        <p class="title is-4">{{post.FirstName}} {{post.LastName}}</p>
+        <p class="subtitle is-6">@{{post.primaryEmail}}</p>
       </div>
     </div>
 
     <div class="content">
-      {{post.message}}
+      {{post.Text}}
 
-      <time datetime="2016-1-1">11:09 PM - {{i}} Jan 2016</time>
+      <time :datetime="post.created_at">{{post.created_at}}</time>
     </div>
   </div>
 </div>
