@@ -3,7 +3,7 @@
 */
 
 const express = require('express');
-const posts = require('../models/posts');
+const posts = require('../models/comments');
 
 const router = express.Router();
 
@@ -18,20 +18,14 @@ router
         posts.get(id).then(x=> res.send( x ) )
         .catch(next);
     })
-    .get('/types', (req, res, next) => {
-        posts.getTypes().then(x=> res.send( x ) )
-        .catch(next);
-    })
     .get('/search', (req, res, next) => {
         posts.search(req.query.q).then(x=> res.send( x ) )
         .catch(next);
     })
     .post('/', (req, res, next) => {
         posts.add(
-            req.body.URL,
             req.body.Text, 
-            req.body.Media_Type, 
-            req.body.Privacy_Setting , 
+            req.body.Post_id, 
             req.body.Owner_id, 
         ).then(newUser => {
             res.send( newUser );
@@ -39,10 +33,8 @@ router
     })
    .put('/:id', (req, res, next) => {
         posts.update( req.params.id,
-            req.body.URL,
             req.body.Text, 
-            req.body.Media_Type, 
-            req.body.Privacy_Setting , 
+            req.body.Post_id, 
             req.body.Owner_id, 
         ).then(newUser => {
             res.send( newUser );
