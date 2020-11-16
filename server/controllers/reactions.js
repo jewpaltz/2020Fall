@@ -3,27 +3,27 @@
 */
 
 const express = require('express');
-const comments = require('../models/comments');
+const reactions = require('../models/reactions');
 
 const router = express.Router();
 
 router
     .get('/', (req, res, next) => {
-        comments.getAll().then(x=> res.send( x ) ) 
+        reactions.getAll().then(x=> res.send( x ) ) 
         .catch(next);
     })
     .get('/:id', (req, res, next) => {
         const id = +req.params.id;
         if(!id) return next();
-        comments.get(id).then(x=> res.send( x ) )
+        reactions.get(id).then(x=> res.send( x ) )
         .catch(next);
     })
     .get('/search', (req, res, next) => {
-        comments.search(req.query.q).then(x=> res.send( x ) )
+        reactions.search(req.query.q).then(x=> res.send( x ) )
         .catch(next);
     })
     .post('/', (req, res, next) => {
-        comments.add(
+        reactions.add(
             req.body.Text, 
             req.body.Post_id, 
             req.body.Owner_id, 
@@ -32,7 +32,7 @@ router
         }).catch(next)
     })
    .put('/:id', (req, res, next) => {
-        comments.update( req.params.id,
+        reactions.update( req.params.id,
             req.body.Text, 
             req.body.Post_id, 
             req.body.Owner_id, 
@@ -41,7 +41,7 @@ router
         }).catch(next)
     })
     .delete('/:id', (req, res, next) => {
-        comments.remove(req.params.id).then(msg => {
+        reactions.remove(req.params.id).then(msg => {
             res.send( msg );
         }).catch(next)
     })
