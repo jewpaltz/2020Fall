@@ -4,47 +4,46 @@
 const mysql = require('./mysql');
 
 const PREFIX = process.env.MYSQL_TABLE_PREFIX || 'Fall2020_';
-const MediaTypes = { GIF: 'image/gif', JPG: 'image/jpeg', PNG: 'image/png' };
-const Privacy_Levels = { HIDDEN: 0, ONLY_ME: 1, ONLY_FRIENDS: 2, PUBLIC: 4 };
 
 async function getAll(){
     console.log("Called Get All")
-    const sql = `SELECT P.*, FirstName, LastName FROM ${PREFIX}Posts P Join ${PREFIX}Users U ON P.Owner_id = U.id`
+    const sql = `SELECT P.*, FirstName, LastName FROM ${PREFIX}Comments P Join ${PREFIX}Users U ON P.Owner_id = U.id`
     return await mysql.query(sql);
+}
+
+async function getForPost(post_id){
+    const sql = `SELECT P.*, FirstName, LastName FROM ${PREFIX}Comments P Join ${PREFIX}Users U ON P.Owner_id = U.id WHERE P.Post_id = ?`
+    return await mysql.query(sql, [post_id]);
 }
 
 async function get(id){
     const sql = `SELECT 
         *
-    FROM ${PREFIX}Posts WHERE id=?`;
+    FROM ${PREFIX}Comments WHERE id=?`;
     const rows = await mysql.query(sql, [id]);
-    if(!rows.length) throw { status: 404, message: "Sorry, there is no such post" };
+    if(!rows.length) throw { status: 404, message: "Sorry, there is no such comment" };
     return rows[0];
 }
 
-async function getTypes(){
-    return await mysql.query(`SELECT id, Name FROM ${PREFIX}Types WHERE Type_id = 3`);
-}
-
-async function add(URL, Text, Media_Type, Privacy_Setting, Owner_id){
-    const sql = `INSERT INTO ${PREFIX}Posts (created_at, URL, Text, Media_Type, Privacy_Setting, Owner_id) VALUES ? ;`;
-    const params = [[new Date(), URL, Text, Media_Type, Privacy_Setting, Owner_id]];
+async function add( Text, Post_id, Owner_id){
+    const sql = `INSERT INTO ${PREFIX}Comments (created_at, Text, Post_id, Owner_id) VALUES ? ;`;
+    const params = [[new Date(), Text, Post_id, Owner_id]];
     const res = await mysql.query(sql, [params]);
     return get(res.insertId);
 }
 
-async function update(id, URL, Text, Media_Type, Privacy_Setting, Owner_id){
-    const sql = `UPDATE ${PREFIX}Posts SET ? WHERE id = ?;`;
-    const params = { URL, Text, Media_Type, Privacy_Setting, Owner_id };
-    const res = await mysql.query(sql, [params]);
+async function update(id, Text, Post_id, Owner_id){
+    const sql = `UPDATE ${PREFIX}Comments SET ? WHERE id = ?;`;
+    const params = { Text, Post_id, Owner_id };
+    const res = await mysql.query(sql, [params, id]);
     return get(res.insertId);
 }
 
 async function remove(id){
-    const sql = `DELETE FROM ${PREFIX}Posts WHERE id = ?`;
+    const sql = `DELETE FROM ${PREFIX}Comments WHERE id = ?`;
     return await mysql.query(sql, [id]);
 }
 
-const search = async q => await mysql.query(`SELECT id, URL, Text, Media_Type FROM ${PREFIX}Posts WHERE Text LIKE ? ; `, [`%${q}%`]);
+const search = async q => await mysql.query(`SELECT id, Text, Post_id FROM ${PREFIX}Comments WHERE Text LIKE ? ; `, [`%${q}%`]);
 
-module.exports = { getAll, get, add, update, remove, getTypes, search, MediaTypes, Privacy_Levels }
+module.exports = { getAll, get, add, update, remove, search, getForPost }

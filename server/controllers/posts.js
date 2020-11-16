@@ -4,6 +4,7 @@
 
 const express = require('express');
 const posts = require('../models/posts');
+const comments = require('../models/comments');
 
 const router = express.Router();
 
@@ -16,6 +17,12 @@ router
         const id = +req.params.id;
         if(!id) return next();
         posts.get(id).then(x=> res.send( x ) )
+        .catch(next);
+    })
+    .get('/:id/comments', (req, res, next) => {
+        const id = +req.params.id;
+        if(!id) return next();
+        comments.getForPost(id).then(x=> res.send( x ) )
         .catch(next);
     })
     .get('/types', (req, res, next) => {
