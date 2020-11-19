@@ -3,13 +3,16 @@
       <h2 class="title is-2">Feed Page</h2>
 
         <div class="columns">
-            <div class="column is-two-thirds">
+            <div class="column is-one-quarter" @mouseenter="error">
+                <Sidebar />
+            </div>
+            <div class="column is-one-half">
                 <Post v-for=" (x, i) in posts " 
                       :key="i"
                       :i="i"
                       :post="x" /> 
             </div>
-            <div class="column is-one-third" @mouseenter="error">
+            <div class="column is-one-quarter" @mouseenter="error">
                 <Sidebar />
             </div>
         </div>

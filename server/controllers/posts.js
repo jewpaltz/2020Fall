@@ -20,6 +20,12 @@ router
         posts.get(id).then(x=> res.send( x ) )
         .catch(next);
     })
+    .get('/byUser/:id', (req, res, next) => {
+        const id = +req.params.id;
+        if(!id) return next();
+        posts.getByUser(id).then(x=> res.send( x ) )
+        .catch(next);
+    })
     .get('/:id/comments', (req, res, next) => {
         const id = +req.params.id;
         if(!id) return next();
