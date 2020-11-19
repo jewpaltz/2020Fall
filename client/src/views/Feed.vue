@@ -19,21 +19,24 @@
 <script>
 import Sidebar from "@/components/Sidebar";
 import Post from "@/components/Post";
-import { posts } from "@/models/feed";
+import { getPosts } from "@/models/feed";
 import session from "@/models/session";
 
 export default {
     data(){
         return {
-            posts
+            posts: []
         }
+    },
+    async created(){
+        this.posts = await getPosts();
     },
     components: {
         Sidebar, Post
     },
     methods: {
         error(){
-            session.addNotification('Something went wrong.', 'danger')
+            //session.addNotification('Something went wrong.', 'danger')
         }
     }
 }

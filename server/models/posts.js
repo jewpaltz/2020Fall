@@ -2,6 +2,7 @@
 
 */
 const mysql = require('./mysql');
+const cm = require('./ContactMethods');
 
 const PREFIX = process.env.MYSQL_TABLE_PREFIX || 'Fall2020_';
 const MediaTypes = { GIF: 'image/gif', JPG: 'image/jpeg', PNG: 'image/png' };
@@ -9,7 +10,12 @@ const Privacy_Levels = { HIDDEN: 0, ONLY_ME: 1, ONLY_FRIENDS: 2, PUBLIC: 4 };
 
 async function getAll(){
     console.log("Called Get All")
-    const sql = `SELECT P.*, FirstName, LastName FROM ${PREFIX}Posts P Join ${PREFIX}Users U ON P.Owner_id = U.id`
+    const sql = `
+        SELECT 
+            P.*, FirstName, LastName,
+            (SELECT Value FROM ${PREFIX}ContactMethods Where User_id = U.id AND Type='${cm.Types.EMAIL}' AND IsPrimary = 1) as PrimaryEmail
+        FROM ${PREFIX}Posts P Join ${PREFIX}Users U ON P.Owner_id = U.id`
+        console.log(sql);
     return await mysql.query(sql);
 }
 
