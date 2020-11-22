@@ -7,6 +7,8 @@ const posts = require('./controllers/posts');
 const comments = require('./controllers/comments');
 const reactions = require('./controllers/reactions');
 
+const apolloServer = require('./graphql/index');
+
 const app = express()
 const port = process.env.PORT || 3000;
 
@@ -59,4 +61,9 @@ app.use( (err, req, res, next) =>{
 //  Init
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
-})
+});
+
+apolloServer.listen().then(({ url, subscriptionsUrl}) => {
+  console.log(`🚀  Http Server ready at ${url}`);
+  console.log(`🚀  WebSocket Server ready at ${subscriptionsUrl}`);
+});
