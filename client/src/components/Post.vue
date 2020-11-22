@@ -25,11 +25,11 @@
     <div class="media">
       <div class="media-left">
         <figure class="image is-48x48 ">
-          <img :src="`http://localhost:3001/public/profiles/${post.Owner_id}.jpg`" alt="Placeholder image">
+          <img :src="`http://localhost:3001/public/profiles/${post.user.id}.jpg`" alt="Placeholder image">
         </figure>
       </div>
       <div class="media-content">
-        <p class="title is-4">{{post.FirstName}} {{post.LastName}}</p>
+        <p class="title is-4">{{post.user.FirstName}} {{post.user.LastName}}</p>
         <p class="subtitle is-6">({{post.PrimaryEmail}})</p>
       </div>
     </div>
@@ -40,9 +40,9 @@
       <time :datetime="post.created_at">{{post.created_at}}</time>
     </div>
 
-    <div class="media" v-for="c in post.Comments" :key="c.id">
+    <div class="media" v-for="c in post.comments" :key="c.id">
       <div class="media-content">
-        <b >{{c.FirstName}} {{c.LastName}} </b>
+        <b >{{c.user.FirstName}} {{c.user.LastName}} </b>
         <span>{{c.Text}}</span>
       </div>
     </div>    

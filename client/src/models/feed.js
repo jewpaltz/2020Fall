@@ -5,7 +5,29 @@
 import { myFetch } from "./my-fetch";
 import session from "./session";
 
-export const getPosts = ()=> myFetch(`posts/byUser/1`);
+export const getPosts = ()=> myFetch(`graphql`, {
+    query: `{
+        posts {
+            id,
+            URL,
+            Text,
+            user {
+                id,
+                FirstName,
+                LastName
+            },
+            comments {
+                id,
+                Text,
+                user {
+                    id,
+                    FirstName,
+                    LastName
+                }     
+            }
+        }
+    }`
+}).then(x=> x.data.posts);
 
 export function react(post_id){
     //console.log(session.user)
