@@ -19,7 +19,7 @@
   <div class="card-content">
 
     <div class="content">
-      {{post.Reactions}} people reacted to this
+      {{post.reactions.length}} people reacted to this
     </div>
 
     <div class="media">
@@ -30,7 +30,7 @@
       </div>
       <div class="media-content">
         <p class="title is-4">{{post.user.FirstName}} {{post.user.LastName}}</p>
-        <p class="subtitle is-6">({{post.PrimaryEmail}})</p>
+        <p class="subtitle is-6">({{post.user.PrimaryEmail}})</p>
       </div>
     </div>
 

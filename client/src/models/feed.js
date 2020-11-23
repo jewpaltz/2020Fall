@@ -12,21 +12,30 @@ export const getPosts = ()=> myFetch(`graphql`, {
             URL,
             Text,
             user {
-                id,
-                FirstName,
-                LastName
+              ...userFields
             },
             comments {
-                id,
                 Text,
                 user {
-                    id,
-                    FirstName,
-                    LastName
+                ...userFields
                 }     
-            }
+            },
+            reactions {
+              id,
+              user {
+                  ...userFields
+              }
+            },
+            reactionCount
+          }
         }
-    }`
+        
+        fragment userFields on User {
+            id  # this is why the profile pic wasn't working
+            FirstName,
+            LastName,
+            PrimaryEmail
+        }`
 }).then(x=> x.data.posts);
 
 export function react(post_id){
