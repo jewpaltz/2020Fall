@@ -39,8 +39,23 @@ export const getPosts = ()=> myFetch(`graphql`, {
 }).then(x=> x.data.posts);
 
 export function react(post_id){
-    //console.log(session.user)
-    return myFetch('reactions', { Post_id: post_id, Owner_id: 1 })
+    const query = `
+    mutation Like($post_id: Int!, $owner_id: Int!)  {
+        like(Post_id: $post_id, Owner_id: $owner_id) {
+          id
+          Emoji
+          post{
+            id
+          }
+          user {
+            id
+          }
+        }
+      }`;
+    const owner_id = session.user.id || 1; // Once we've implemented a proper login. The user will have an id. in the meantime this is the mock.
+    const variables = { post_id, owner_id  };
+    console.log(variables)
+    return myFetch('graphql', { query, variables })
 }
 
 export function comment(post_id, text){

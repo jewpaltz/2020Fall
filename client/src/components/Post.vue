@@ -98,7 +98,7 @@ export default {
       react(){
       const that = this;
         react(this.post.id)
-        .then(x=> that.post.Reactions += 1)
+        .then(x=> that.post.reactions.push(x))
         .catch(err=> console.error(err))
       },
       async comment(){

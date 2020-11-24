@@ -40,12 +40,18 @@ const typeDefs = gql`
     posts: [Post]
     post(id: ID): Post
   }
+  type Mutation {
+    like(Owner_id: Int!, Post_id: Int!): Reaction
+  }
 `;
 
 const resolvers = {
     Query: {
         posts: (_, {}) => posts.getAll(),
         post: (_, { id }) => posts.get(id),
+    },
+    Mutation: {
+      like: (_, { Owner_id, Post_id }) => reactions.add(undefined, Post_id, Owner_id)
     },
     Post: {
         reactionCount: x=> x.Reactions,   
@@ -57,7 +63,8 @@ const resolvers = {
       user: ({ Owner_id }) => users.get(Owner_id)
     },
     Reaction: {
-      user: ({ Owner_id }) => users.get(Owner_id)
+      user: ({ Owner_id }) => users.get(Owner_id),
+      post: ({ Post_id}) => posts.get(Post_id)
     },
     User: {
         posts: ({ id }) => posts.getByUser(id)
