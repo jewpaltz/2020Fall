@@ -1,14 +1,14 @@
-import logo from './logo.svg';
+
 import 'bulma';
 import './App.css';
+import Nav from './components/Nav';
 
 function App() {
   return (
     <div class="">
       
-      <nav />
+      <Nav />
       <div class="container">
-          <img src={logo} className="App-logo" alt="logo" />
           <notifications /> 
           <router-view/>
       </div>
