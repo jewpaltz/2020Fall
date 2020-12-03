@@ -19,3 +19,9 @@
 }
 
 /* Our real CSS Stuff */
+#LoginBadge .media .image img {
+  width: auto;
+}
+#LoginBadge .media-content {
+  line-height: .95rem;
+}

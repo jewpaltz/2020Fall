@@ -5,10 +5,10 @@ import Nav from './components/Nav';
 
 function App() {
   return (
-    <div class="">
+    <div className="">
       
       <Nav />
-      <div class="container">
+      <div className="container">
           <notifications /> 
           <router-view/>
       </div>

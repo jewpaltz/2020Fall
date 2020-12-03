@@ -1,65 +1,67 @@
-//import LoginBadge from "@/components/LoginBadge";
+import { useState } from "react";
+import LoginBadge from "../components/LoginBadge";
 import logo from '../logo.svg';
 
 function Nav() {
   
-    const isActive = false;
+    //let isActive = false;
+    const [ isActive, setIsActive] = useState(false);
 
 return ( 
-<nav class="navbar container is-fixed-top is-info" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="https://bulma.io">
+<nav className="navbar container is-fixed-top is-info" role="navigation" aria-label="main navigation">
+  <div className="navbar-brand">
+    <a className="navbar-item" href="https://bulma.io">
       <img src={logo} className="App-logo" alt="logo" />
     </a>
 
-    <a role="button" class="navbar-burger burger" class="{ 'is-active': isActive }" click="isActive = !isActive" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+    <a role="button" className={`navbar-burger burger ${isActive ? 'is-active' : ''}`} onClick={()=> setIsActive( !isActive ) } aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu "  class="{ 'is-active': isActive }">
-    <div class="navbar-start">
-      <router-link to="/"  class="navbar-item" >Home</router-link>
-      <router-link to="/about"  class="navbar-item" >About</router-link>
-      <router-link to="/feed"  class="navbar-item" >Feed</router-link>
+  <div id="navbarBasicExample" className={`navbar-menu ${isActive ? 'is-active' : ''}`} >
+    <div className="navbar-start">
+      <router-link to="/"  className="navbar-item" >Home</router-link>
+      <router-link to="/about"  className="navbar-item" >About</router-link>
+      <router-link to="/feed"  className="navbar-item" >Feed</router-link>
 
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
+      <div className="navbar-item has-dropdown is-hoverable">
+        <a className="navbar-link">
           More
         </a>
 
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
+        <div className="navbar-dropdown">
+          <a className="navbar-item">
             About
           </a>
-          <a class="navbar-item">
+          <a className="navbar-item">
             Jobs
           </a>
-          <a class="navbar-item">
+          <a className="navbar-item">
             Contact
           </a>
-          <hr class="navbar-divider" />
-          <a class="navbar-item">
+          <hr className="navbar-divider" />
+          <a className="navbar-item">
             Report an issue
           </a>
         </div>
       </div>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link"> Admin </a>
+      <div className="navbar-item has-dropdown is-hoverable">
+        <a className="navbar-link"> Admin </a>
 
-        <div class="navbar-dropdown">
-          <router-link to="/users"  class="navbar-item" >Users</router-link>
+        <div className="navbar-dropdown">
+          <router-link to="/users"  className="navbar-item" >Users</router-link>
         </div>
       </div>
     </div>
 
  </div>
 
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <loginBadge />
+    <div className="navbar-end">
+      <div className="navbar-item">
+        <LoginBadge />
       </div>
     </div>
 
